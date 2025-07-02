@@ -5,7 +5,7 @@ from config import OPENROUTER_API_KEY, OPENROUTER_MODEL, OPENROUTER_SITE_URL, OP
 class AIProcessor:
     def __init__(self):
         if not OPENROUTER_API_KEY or "sk-or-v1" not in OPENROUTER_API_KEY:
-            raise ValueError("OpenRouter API Key is missing or invalid in config.py")
+            raise ValueError("OpenRouter API Key is missing or invalid in config.py or .env file")
         self.client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=OPENROUTER_API_KEY,
