@@ -42,7 +42,7 @@ def run_weekly_analysis(state_manager):
         return
 
     df = pd.read_excel(ALL_POSTS_EXCEL_FILE)
-    if len(df) < 5: # Don't run analysis without enough data
+    if len(df) < 5:
         print(f"-> Not enough data for analysis ({len(df)} posts). Needs at least 5.")
         return
 
@@ -51,9 +51,13 @@ def run_weekly_analysis(state_manager):
     story_performance = df.groupby('Story_Style')['engagement_score'].mean().sort_values(ascending=False)
     edit_performance = df.groupby('Editing_Style')['engagement_score'].mean().sort_values(ascending=False)
     
-    best_story_style = story_performance.index[0]
-    best_edit_style = edit_performance.index[0]
+    best_story_style = story_performance.index[0] if not story_performance.empty else None
+    best_edit_style = edit_performance.index[0] if not edit_performance.empty else None
     
+    if not best_story_style or not best_edit_style:
+        print("-> Could not determine best styles from analysis.")
+        return
+
     print(f"🏆 Best Story Style: '{best_story_style}' | Best Edit Style: '{best_edit_style}'")
 
     report = {
@@ -62,6 +66,8 @@ def run_weekly_analysis(state_manager):
         "story_performance": story_performance.to_dict(),
         "edit_performance": edit_performance.to_dict()
     }
+    
+    os.makedirs(OUTPUT_DIR_DATA, exist_ok=True)
     with open(ANALYSIS_REPORT_FILE, 'w') as f:
         json.dump(report, f, indent=4)
         
