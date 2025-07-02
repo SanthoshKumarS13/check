@@ -1,0 +1,9 @@
+openai
+feedparser
+requests
+moviepy
+Pillow
+pandas
+openpyxl
+cloudinary
+python-dotenv
