@@ -12,7 +12,7 @@ OPENROUTER_SITE_URL = os.getenv("OPENROUTER_SITE_URL", "https://nextgensignals.a
 OPENROUTER_SITE_NAME = os.getenv("OPENROUTER_SITE_NAME", "NextGen Signals")
 
 PEXELS_API_KEY = os.getenv("PEXELS_API_KEY")
-PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY")
+JAMENDO_CLIENT_ID = os.getenv("JAMENDO_CLIENT_ID", "735d6963")
 
 CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
 CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
@@ -77,13 +77,13 @@ EDITING_STYLES = {
 REEL_WIDTH = 1080
 REEL_HEIGHT = 1920
 REEL_DURATION_SECONDS = 12
-LOGO_PATH = "assets/NextGen_Signals_Logo.png" # Make sure you have a logo file here
+LOGO_PATH = "assets/NextGen_Signals_Logo.png"
 LOGO_WIDTH = 280
 
 # --- Output & State Management ---
 OUTPUT_DIR_VIDEO = "output/videos"
 OUTPUT_DIR_DATA = "output/data"
-ALL_POSTS_EXCEL_FILE = f"{OUTPUT_DIR_DATA}/all_posts.xlsx"
-STATE_FILE = f"{OUTPUT_DIR_DATA}/state.json"
-ANALYSIS_REPORT_FILE = f"{OUTPUT_DIR_DATA}/weekly_analysis.json"
+ALL_POSTS_EXCEL_FILE = os.path.join(OUTPUT_DIR_DATA, "all_posts.xlsx")
+STATE_FILE = os.path.join(OUTPUT_DIR_DATA, "state.json")
+ANALYSIS_REPORT_FILE = os.path.join(OUTPUT_DIR_DATA, "weekly_analysis.json")
 ANALYSIS_INTERVAL_DAYS = 7
