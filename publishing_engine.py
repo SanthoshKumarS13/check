@@ -1,6 +1,5 @@
 # publishing_engine.py
 # This file contains placeholders for actual publishing logic.
-# You would need to implement the API calls to Cloudinary and Instagram here.
 
 class CloudinaryUploader:
     def upload_video(self, video_path, public_id):
