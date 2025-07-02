@@ -3,7 +3,7 @@ import json
 import os
 import random
 from datetime import datetime, timedelta, UTC
-from config import (STATE_FILE, CONTENT_SOURCES, STORYTELLING_STYLES, EDITING_STYLES, ANALYSIS_INTERVAL_DAYS)
+from config import (STATE_FILE, CONTENT_SOURCES, STORYTELLING_STYLES, EDITING_STYLES, ANALYSIS_INTERVAL_DAYS, OUTPUT_DIR_DATA)
 
 class StateManager:
     def __init__(self):
@@ -31,6 +31,7 @@ class StateManager:
             self._save_state()
 
     def _save_state(self):
+        os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
         with open(STATE_FILE, 'w') as f:
             json.dump(self.state, f, indent=4)
 
@@ -47,7 +48,7 @@ class StateManager:
         return style_key, EDITING_STYLES[style_key]
         
     def get_last_story_key(self):
-        return self.state['last_story_key']
+        return self.state.get('last_story_key')
 
     def should_run_analysis(self):
         if not self.state.get('last_analysis_timestamp'): return True
