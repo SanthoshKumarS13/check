@@ -42,7 +42,7 @@ def main():
     print("🎥 Sourcing video and music...")
     search_query = f"abstract technology {category}"
     video_path, video_credit = media_fetcher.get_video(search_query)
-    music_path, music_credit = media_fetcher.get_music("upbeat electronic tech")
+    music_path, music_credit = media_fetcher.get_music() # Query not needed for current logic
     if not video_path or not music_path:
         print("-> Failed to source media. Stopping run.")
         return
@@ -60,7 +60,7 @@ def main():
 
     # --- Caption & Hashtags ---
     print("✍️ Generating caption and hashtags...")
-    media_credit_info = f"Video by {video_credit}, Music by {music_credit}" if video_credit and music_credit else "Pexels/Pixabay"
+    media_credit_info = f"Video by {video_credit}, Music by {music_credit}" if video_credit and music_credit else "Pexels/Jamendo/Local"
     caption = ai_processor.generate_caption(hook, revelation, article['source'], media_credit_info)
     hashtags = ai_processor.generate_hashtags(f"{category} {hook}")
 
