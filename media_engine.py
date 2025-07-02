@@ -7,7 +7,7 @@ from config import PEXELS_API_KEY, JAMENDO_CLIENT_ID
 class MediaFetcher:
     def __init__(self):
         os.makedirs("temp_media", exist_ok=True)
-        os.makedirs("music", exist_ok=True)
+        os.makedirs("audio", exist_ok=True) # <-- CHANGED
 
     def _download_file(self, url, filename):
         try:
@@ -53,19 +53,23 @@ class MediaFetcher:
             return None, None
 
     def _get_local_music(self):
+        """Picks a random music file from the local 'audio' directory as a fallback."""
+        print("   - Attempting to fetch music from local 'audio' folder...")
         try:
-            music_files = [f for f in os.listdir("music") if f.endswith((".mp3", ".wav"))]
+            music_files = [f for f in os.listdir("audio") if f.endswith((".mp3", ".wav"))] # <-- CHANGED
             if not music_files:
+                print("   -> Error: The 'audio' folder is empty. No fallback music available.")
                 return None, None
             
             chosen_song = random.choice(music_files)
             print(f"   - Selected local music: {chosen_song}")
-            return os.path.join("music", chosen_song), os.path.splitext(chosen_song)[0]
+            return os.path.join("audio", chosen_song), os.path.splitext(chosen_song)[0] # <-- CHANGED
         except Exception as e:
-            print(f"Error reading from local music folder: {e}")
+            print(f"Error reading from local audio folder: {e}")
             return None, None
             
     def _get_jamendo_music(self):
+        """Fetches music from the Jamendo API."""
         if not JAMENDO_CLIENT_ID: return None, None
         print("   - Attempting to fetch music from Jamendo API...")
         try:
@@ -92,10 +96,12 @@ class MediaFetcher:
             return None, None
 
     def get_music(self, query=None):
-        # API First, then local fallback
+        """Tries Jamendo API first, then falls back to the local folder."""
+        # Step 1: Try Jamendo API
         music_path, credit = self._get_jamendo_music()
         if music_path:
             return music_path, credit
 
+        # Step 2: Fallback to Local Folder
         print("-> Jamendo API failed or returned no results. Falling back to local music folder.")
         return self._get_local_music()
