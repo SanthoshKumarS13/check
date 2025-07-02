@@ -2,7 +2,7 @@ openai
 feedparser
 requests
 moviepy
-Pillow
+Pillow==9.5.0
 pandas
 openpyxl
 cloudinary
